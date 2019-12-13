@@ -1,0 +1,19 @@
+---
+# tasks/openssl_certs.yml
+
+- name: get ssl_private key
+  shell: cat /tmp/server.key
+  register: ssl_key_output
+  no_log: true
+
+- name: get ssl_cert
+  shell: cat /tmp/server.crt
+  register: ssl_crt_output
+  no_log: true
+
+- name: set ssl facts
+  set_fact:
+    ssl_cert: "{{ ssl_crt_output.stdout }}"
+    ssl_ca_cert: "{{ ssl_crt_output.stdout }}"
+    ssl_key: "{{ ssl_key_output.stdout }}"
+  no_log: true

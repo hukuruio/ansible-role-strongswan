@@ -1,0 +1,7 @@
+---
+# handlers file for ansible-role-strongswan
+
+- name: restart strongswan
+  service:
+    name: "{{ strongswan_service_name }}"
+    state: "{{ strongswan_restart_handler_state }}"

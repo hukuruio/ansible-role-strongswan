@@ -1,0 +1,13 @@
+---
+# tasks/setup-RedHat.yml
+
+- name: add epel-release package
+  package:
+    name: epel-release
+    state: present
+
+- name: install strongswan
+  package:
+    name: "{{ strongswan_package }}"
+    state: present
+  notify: restart strongswan

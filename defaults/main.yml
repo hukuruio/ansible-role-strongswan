@@ -1,0 +1,16 @@
+---
+# defaults file for ansible-role-strongswan
+
+strongswan_package: strongswan
+strongswan_config_dir: /etc/strongswan
+ipsec_config_file: ipsec.conf
+ipsec_secrets_file: ipsec.secrets
+strongswan_cert_file: server.crt
+strongswan_key_file: server.key
+strongswan_ca_cert_file: ca.crt
+strongswan_cert_domain: test.local
+strongswan_sysctl_file: /etc/sysctl.d/strongswan.conf
+ipsec_template: ipsec.conf.j2
+running_test: false
+strongswan_service_name: strongswan
+strongswan_restart_handler_state: restarted

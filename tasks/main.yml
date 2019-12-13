@@ -1,0 +1,7 @@
+---
+# tasks file for ansible-role-strongswan
+
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: configure.yml

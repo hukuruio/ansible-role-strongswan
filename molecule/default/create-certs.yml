@@ -1,0 +1,33 @@
+---
+# openssl_certs.yml
+- name: pip prereqs epel
+  package:
+    name: epel-release
+    state: present
+
+- name: install pip
+  package:
+    name: python2-pip
+    state: present
+
+- name: install openssl packages
+  pip:
+    name: cryptography
+
+- name: Generate an OpenSSL private key
+  openssl_privatekey:
+    path: /tmp/server.key
+    size: 1024
+
+- name: Generate an OpenSSL CSR
+  openssl_csr:
+    path: /tmp/server.csr
+    privatekey_path: /tmp/server.key
+    common_name: "{{ common_name }}"
+
+- name: Generate a Self Signed Cert
+  openssl_certificate:
+    path: /tmp/server.crt
+    privatekey_path: /tmp/server.key
+    csr_path: /tmp/server.csr
+    provider: selfsigned

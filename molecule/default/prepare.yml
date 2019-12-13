@@ -1,0 +1,10 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  become: true
+  vars:
+    common_name: test.local
+  tasks:
+    - name: generate self signed certs for testing
+      include_tasks: create-certs.yml
