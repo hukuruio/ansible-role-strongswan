@@ -16,6 +16,8 @@ conn ikev2conn
         leftfirewall=yes
         leftsendcert=always
         right=%any
+        rightsourceip={{ strongswan_right_source_ip }}
+        rightdns={{ ansible_dns.nameservers[0] }}
         leftauth=pubkey
         rightauth=pubkey
         auto=add

@@ -9,6 +9,7 @@ strongswan_cert_file: server.crt
 strongswan_key_file: server.key
 strongswan_ca_cert_file: ca.crt
 strongswan_cert_domain: test.local
+strongswan_right_source_ip: 192.168.231.0/24
 strongswan_sysctl_file: /etc/sysctl.d/strongswan.conf
 ipsec_template: ipsec.conf.j2
 running_test: false
