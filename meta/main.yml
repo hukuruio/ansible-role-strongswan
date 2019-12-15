@@ -3,7 +3,7 @@ galaxy_info:
   author: HukuruIO
   description: StrongSwan VPN
   company: "Hukuru IO"
-  license: license (GPLv2, CC-BY, etc)
+  license: GPLv2
   min_ansible_version: 2.8
   platforms:
     - name: CentOS

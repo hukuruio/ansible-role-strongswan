@@ -1,9 +1,6 @@
 ---
 # tasks/configure.yml
 
-- include_tasks: ssl_data.yml
-  when: running_test | bool
-
 - name: enable sysctl net.ipv4.ip_forward
   sysctl:
     name: net.ipv4.ip_forward
@@ -16,7 +13,7 @@
 - name: enable sysctl net.ipv4.conf.all.accept_redirects
   sysctl:
     name: net.ipv4.conf.all.accept_redirects
-    value: "1"
+    value: "0"
     sysctl_set: yes
     state: present
     reload: yes
@@ -25,7 +22,7 @@
 - name: enable sysctl net.ipv4.conf.all.send_redirects
   sysctl:
     name: net.ipv4.conf.all.send_redirects
-    value: "1"
+    value: "0"
     sysctl_set: yes
     state: present
     reload: yes
@@ -34,13 +31,13 @@
 - name: manage strongswan ipsec secrets file
   template:
     src: templates/ipsec/ipsec.secrets.j2
-    dest: "{{ strongswan_config_dir}}/{{ ipsec_secrets_file }}"
+    dest: "{{ strongswan_config_dir }}/{{ ipsec_secrets_file }}"
   notify: restart strongswan
 
 - name: manage strongswan private key file
   template:
     src: templates/ssl_template.j2
-    dest: "{{ strongswan_config_dir}}/ipsec.d/private/{{ strongswan_key_file }}"
+    dest: "{{ strongswan_config_dir }}/ipsec.d/private/{{ strongswan_key_file }}"
     mode: 0400
   vars:
     ssl_data: "{{ ssl_key }}"
@@ -49,16 +46,25 @@
 - name: manage strongswan cert file
   template:
     src: templates/ssl_template.j2
-    dest: "{{ strongswan_config_dir}}/ipsec.d/certs/{{ strongswan_cert_file }}"
+    dest: "{{ strongswan_config_dir }}/ipsec.d/certs/{{ strongswan_cert_file }}"
     mode: 0644
   vars:
     ssl_data: "{{ ssl_cert }}"
   notify: restart strongswan
 
+- name: manage strongswan ca cert file
+  template:
+    src: templates/ssl_template.j2
+    dest: "{{ strongswan_config_dir }}/ipsec.d/cacerts/{{ strongswan_ca_cert_file }}"
+    mode: 0644
+  vars:
+    ssl_data: "{{ ssl_ca }}"
+  notify: restart strongswan
+
 - name: manage strongswan config
   template:
     src: "ipsec/{{ ipsec_template }}"
-    dest: "{{ strongswan_config_dir}}/{{ ipsec_config_file }}"
+    dest: "{{ strongswan_config_dir }}/{{ ipsec_config_file }}"
   notify: restart strongswan
 
 - name: manage strongswan service
